@@ -44,7 +44,6 @@ for (let callBtn of callBtns) {
 
      let now = new Date();
     let exactTime = now.toLocaleString();
-
     // Create new history item
     let historyItem = document.createElement("div");
     historyItem.className = "p-2 bg-gray-100 text-2xl mt-2";
@@ -57,6 +56,28 @@ for (let callBtn of callBtns) {
 // Clear button event
 clearBtn.addEventListener("click", function () {
   historyList.innerHTML = ""; 
+});
+
+
+
+
+// Copy buttons
+let copyBtns = document.querySelectorAll(".copy-btn");
+let copyCnt = document.getElementById("copy-cnt");
+
+// Loop through all copy buttons
+copyBtns.forEach(btn => {
+  btn.addEventListener("click", function(e) {
+    let card = e.target.closest("section");
+    let serviceNumber = card.querySelector("h2:nth-of-type(2)").innerText;
+    navigator.clipboard.writeText(serviceNumber).then(() => {
+      alert(`📋 Number ${serviceNumber} copied to clipboard!`);
+      copyCnt.innerText = parseInt(copyCnt.innerText) + 1;
+    }).catch(err => {
+      alert("❌ Failed to copy!");
+      console.error(err);
+    });
+  });
 });
 
 
